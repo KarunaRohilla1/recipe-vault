@@ -204,3 +204,46 @@ a {
 a:hover {
     text-decoration: underline !important;
 }
+
+/* ======================================= */
+/* MOBILE RECIPE CARD */
+/* ======================================= */
+
+.mobile-recipe-card {
+    background: #FFFFFF;
+    border: 1px solid #DED6CA;
+    border-radius: 22px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+}
+
+.mobile-recipe-card h3 {
+    font-family: "Crushed", cursive !important;
+    font-size: 26px !important;
+    margin-bottom: 6px !important;
+    line-height: 1.1 !important;
+
+    margin-top: 0 !important;
+    margin-bottom: 2px !important;
+    padding: 0 !important;
+}
+
+.mobile-recipe-card a {
+    color: #2F2A24 !important;
+    text-decoration: none !important;
+}
+
+.mobile-category {
+    font-family: "Crushed", cursive;
+    font-size: 18px;
+    color: #8B8176;
+    margin-bottom: 8px;
+    line-height: 1.2;
+}
+
+.mobile-macros {
+    font-family: "Crushed", cursive;
+    font-size: 17px;
+    line-height: 1.4;
+    color: #4A433C;
+}

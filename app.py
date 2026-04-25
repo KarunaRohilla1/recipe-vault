@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from streamlit_js_eval import streamlit_js_eval
 
 # ---------------------------------------------------
 # PAGE CONFIG
@@ -23,6 +24,14 @@ def load_css():
         )
 
 load_css()
+screen_width = streamlit_js_eval(
+    js_expressions='window.innerWidth',
+    key='WIDTH',
+    want_output=True,
+)
+
+is_mobile = screen_width is not None and screen_width < 768
+
 
 # ---------------------------------------------------
 # GOOGLE SHEETS CONNECTION
@@ -205,102 +214,131 @@ filtered_df = filtered_df.sort_values(
 # TABLE HEADER
 # ---------------------------------------------------
 
-st.markdown("---")
+if not is_mobile:
+    st.markdown("---")
 
-header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+    header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
 
-headers = [
-    "Recipe Name",
-    "Category",
-    "Protein",
-    "Carbs",
-    "Fats",
-    "Calories",
-    "Open"
-]
+    headers = [
+        "Recipe Name",
+        "Category",
+        "Protein",
+        "Carbs",
+        "Fats",
+        "Calories",
+        "Open"
+    ]
 
-for col, header in zip(header_cols, headers):
-    col.markdown(f"**{header}**")
+    for col, header in zip(header_cols, headers):
+        col.markdown(f"**{header}**")
 
-st.markdown(
-    """
-    <hr style="
-        margin: 6px 0;
-        border: none;
-        border-top: 1px solid #E5DED3;
-    ">
-    """,
-    unsafe_allow_html=True
-)
+    st.markdown(
+        """
+        <hr style="
+            margin: 6px 0;
+            border: none;
+            border-top: 1px solid #E5DED3;
+        ">
+        """,
+        unsafe_allow_html=True
+    )
 
 # ---------------------------------------------------
 # TABLE ROWS
 # ---------------------------------------------------
 
-for _, row in filtered_df.iterrows():
+if is_mobile:
 
-    cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+    for _, row in filtered_df.iterrows():
 
-    # Recipe Name
-    cols[0].markdown(
-        f"""
-        <div style="
-            font-size: 20px;
-            color: #2F2A24;
-            line-height: 1.2;
-            padding-top: 4px;
-        ">
-            {row['Recipe Name']}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        recipe_link = row["Recipe Link"] if row["Recipe Link"] else "#"
 
-    # Category
-    cols[1].markdown(
-        f"""
-        <div style="
-            font-size: 20px;
-            color: #6B6258;
-            padding-top: 6px;
-        ">
-            {row['Category']}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+        card_html = f"""
+<div class="mobile-recipe-card">
 
-    # Protein
-    cols[2].markdown(
-        f"{row['Protein']}g"
-    )
+### [{row['Recipe Name']}]({recipe_link})
 
-    # Carbs
-    cols[3].markdown(
-        f"{row['Carbs']}g"
-    )
+<div class="mobile-category">
+{row['Category']}
+</div>
 
-    # Fats
-    cols[4].markdown(
-        f"{row['Fats']}g"
-    )
+<div class="mobile-macros">
+Protein: {row['Protein']}g  
+Carbs: {row['Carbs']}g  
+Fats: {row['Fats']}g  
+Calories: {row['Calories']}
+</div>
 
-    # Calories
-    cols[5].markdown(
-        f"{row['Calories']}"
-    )
+</div>
+"""
 
-    # Recipe Link
-    if row["Recipe Link"]:
-        cols[6].markdown(
-            f"[Open →]({row['Recipe Link']})"
+        st.markdown(card_html, unsafe_allow_html=True)
+
+else:
+    for _, row in filtered_df.iterrows():
+
+        cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+
+        # Recipe Name
+        cols[0].markdown(
+            f"""
+            <div style="
+                font-size: 20px;
+                color: #2F2A24;
+                line-height: 1.2;
+                padding-top: 4px;
+            ">
+                {row['Recipe Name']}
+            </div>
+            """,
+            unsafe_allow_html=True
         )
-    else:
-        cols[6].markdown("-")
 
-    st.markdown(
-        """
-        <div style="margin-top: 10px; margin-bottom: 10px;"></div>
-        """,
-        unsafe_allow_html=True
-    )
+        # Category
+        cols[1].markdown(
+            f"""
+            <div style="
+                font-size: 20px;
+                color: #6B6258;
+                padding-top: 6px;
+            ">
+                {row['Category']}
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        # Protein
+        cols[2].markdown(
+            f"{row['Protein']}g"
+        )
+
+        # Carbs
+        cols[3].markdown(
+            f"{row['Carbs']}g"
+        )
+
+        # Fats
+        cols[4].markdown(
+            f"{row['Fats']}g"
+        )
+
+        # Calories
+        cols[5].markdown(
+            f"{row['Calories']}"
+        )
+
+        # Recipe Link
+        if row["Recipe Link"]:
+            cols[6].markdown(
+                f"[Open →]({row['Recipe Link']})"
+            )
+        else:
+            cols[6].markdown("-")
+
+        st.markdown(
+            """
+            <div style="margin-top: 10px; margin-bottom: 10px;"></div>
+            """,
+            unsafe_allow_html=True
+        )
