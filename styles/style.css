@@ -1,0 +1,206 @@
+@import url('https://fonts.googleapis.com/css2?family=Allura&family=Crushed&display=swap');
+
+/* ================================================= */
+/* APP FOUNDATION */
+/* ================================================= */
+
+.stApp {
+    background-color: #F7F4EF;
+    color: #2F2A24;
+    font-family: "Crushed", cursive !important;
+}
+
+/* ================================================= */
+/* TOP HEADER BAR */
+/* ================================================= */
+
+header[data-testid="stHeader"] {
+    background-color: #050814 !important;
+    height: 72px;
+}
+
+header[data-testid="stHeader"] * {
+    background: transparent !important;
+}
+
+/* ================================================= */
+/* MAIN CONTENT SPACING */
+/* ================================================= */
+
+div.block-container {
+    padding-top: 2rem !important;
+    padding-bottom: 1rem !important;
+    padding-left: 3rem !important;
+    padding-right: 3rem !important;
+}
+
+/* ================================================= */
+/* SIDEBAR */
+/* ================================================= */
+
+section[data-testid="stSidebar"] {
+    background-color: #F7F4EF !important;
+    border-right: 1px solid #DED6CA !important;
+}
+
+/* black strip continuation */
+
+section[data-testid="stSidebar"] > div {
+    background: linear-gradient(
+        to bottom,
+        #050814 0px,
+        #050814 72px,
+        #F7F4EF 72px,
+        #F7F4EF 100%
+    ) !important;
+}
+
+/* sidebar spacing */
+
+section[data-testid="stSidebar"] .block-container {
+    padding-top: 1.5rem !important;
+}
+
+/* ================================================= */
+/* SIDEBAR TITLE */
+/* ================================================= */
+
+section[data-testid="stSidebar"] h1 {
+    font-family: "Allura", cursive !important;
+    font-size: 58px !important;
+    font-weight: 400 !important;
+    color: #2F2A24 !important;
+    margin-bottom: 0px !important;
+    line-height: 1 !important;
+}
+
+/* sidebar subtitle */
+
+section[data-testid="stSidebar"] p {
+    font-family: "Crushed", cursive !important;
+    font-size: 24px !important;
+    color: #6B6258 !important;
+    line-height: 1.4 !important;
+}
+
+/* category labels */
+
+div[role="radiogroup"] label {
+    font-family: "Crushed", cursive !important;
+    font-size: 28px !important;
+    color: #2F2A24 !important;
+    margin-bottom: 10px !important;
+}
+
+/* ================================================= */
+/* MAIN TITLE */
+/* ================================================= */
+
+h1 {
+    font-family: "Allura", cursive !important;
+    font-size: 92px !important;
+    font-weight: 400 !important;
+    color: #2F2A24 !important;
+    margin-bottom: 0px !important;
+    line-height: 1 !important;
+}
+
+/* subtitle / captions */
+
+p {
+    font-family: "Crushed", cursive !important;
+    font-size: 24px !important;
+    color: #6B6258 !important;
+    line-height: 1.4 !important;
+}
+
+/* ================================================= */
+/* SEARCH BAR */
+/* ================================================= */
+
+.stTextInput input {
+    background: #FFFFFF !important;
+    border: 1px solid #D8D0C5 !important;
+    border-radius: 18px !important;
+    padding: 14px 18px !important;
+    font-family: "Crushed", cursive !important;
+    font-size: 20px !important;
+    color: #2F2A24 !important;
+    box-shadow: none !important;
+}
+
+.stTextInput input::placeholder {
+    color: #9A9085 !important;
+    font-family: "Crushed", cursive !important;
+}
+
+/* ================================================= */
+/* TABLE HEADERS */
+/* ================================================= */
+
+strong {
+    font-family: "Crushed", cursive !important;
+    font-size: 25px !important;
+    color: #5B534B !important;
+    letter-spacing: 0px !important;
+    font-weight: 600 !important;
+}
+
+/* ================================================= */
+/* TABLE ROWS */
+/* ================================================= */
+
+.element-container {
+    margin-bottom: 0rem !important;
+}
+
+div[data-testid="column"] {
+    padding-top: 0rem !important;
+    padding-bottom: 0rem !important;
+}
+
+/* compact divider */
+
+hr {
+    margin: 6px 0 !important;
+    border: none !important;
+    border-top: 1px solid #E5DED3 !important;
+}
+
+/* ================================================= */
+/* RECIPE NAMES */
+/* ================================================= */
+
+h3 {
+    font-family: "Crushed", cursive !important;
+    font-size: 26px !important;
+    font-weight: 400 !important;
+    color: #2F2A24 !important;
+    margin: 0 !important;
+    line-height: 1.2 !important;
+}
+
+/* ================================================= */
+/* TABLE VALUES */
+/* ================================================= */
+
+[data-testid="stMarkdownContainer"] {
+    font-family: "Crushed", cursive !important;
+    font-size: 18px !important;
+    color: #2F2A24 !important;
+}
+
+/* ================================================= */
+/* LINKS */
+/* ================================================= */
+
+a {
+    font-family: "Crushed", cursive !important;
+    font-size: 24px !important;
+    color: #6E5E4E !important;
+    text-decoration: none !important;
+}
+
+a:hover {
+    text-decoration: underline !important;
+}
