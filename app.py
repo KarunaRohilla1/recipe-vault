@@ -245,7 +245,7 @@ for _, row in filtered_df.iterrows():
     cols[0].markdown(
         f"""
         <div style="
-            font-size: 24px;
+            font-size: 20px;
             color: #2F2A24;
             line-height: 1.2;
             padding-top: 4px;
@@ -260,7 +260,7 @@ for _, row in filtered_df.iterrows():
     cols[1].markdown(
         f"""
         <div style="
-            font-size: 24px;
+            font-size: 20px;
             color: #6B6258;
             padding-top: 6px;
         ">
