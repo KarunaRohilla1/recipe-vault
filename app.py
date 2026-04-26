@@ -37,7 +37,7 @@ is_mobile = screen_width is not None and screen_width < 768
 # GOOGLE SHEETS CONNECTION
 # ---------------------------------------------------
 
-sheet_id = "15UfbwoR9p8_8iz1eEU54iQuLvojOb7h91YHi4TrR-Y4"
+sheet_id = sheet_id = st.secrets["sheet_id"]
 sheet_name = "Master"
 
 csv_url = f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
