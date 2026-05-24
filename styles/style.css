@@ -247,3 +247,93 @@ a:hover {
     line-height: 1.4;
     color: #4A433C;
 }
+
+/* ================================================= */
+/* CLEAN TABLE HEADER */
+/* ================================================= */
+
+.table-header {
+    font-family: "Crushed", cursive !important;
+    font-size: 26px !important;
+    color: #5B534B !important;
+    padding-bottom: 8px;
+}
+
+/* ================================================= */
+/* CLEAN TABLE CELLS */
+/* ================================================= */
+
+.table-cell {
+    font-family: "Crushed", cursive !important;
+    font-size: 22px !important;
+    color: #2F2A24 !important;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    line-height: 1.3;
+}
+
+/* ================================================= */
+/* OPEN LINK */
+/* ================================================= */
+
+.open-link {
+    color: #6E5E4E !important;
+    text-decoration: none !important;
+    font-size: 22px !important;
+}
+
+.open-link:hover {
+    text-decoration: underline !important;
+}
+
+/* ================================================= */
+/* MEAL PLANNER */
+/* ================================================= */
+
+.meal-label {
+    font-family: "Crushed", cursive !important;
+    font-size: 22px !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #9B9188 !important;
+}
+
+.meal-item {
+    font-family: "Crushed", cursive !important;
+    font-size: 20px !important;
+    line-height: 1.7;
+    color: #2F2A24 !important;
+    margin-bottom: 10px;
+}
+
+.meal-link {
+    color: #2F2A24 !important;
+    text-decoration: underline !important;
+}
+
+.meal-link:hover {
+    color: #8B7355 !important;
+    text-decoration: underline !important;
+}
+
+/* ================================================= */
+/* PIN CARD */
+/* ================================================= */
+
+.pin-card {
+    background: white;
+    border: 1px solid #DED6CA;
+    border-radius: 24px;
+    padding: 26px;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 22px;
+}
+
+.pin-title {
+    font-family: "Crushed", cursive !important;
+    font-size: 16px !important;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #8B8176;
+}
