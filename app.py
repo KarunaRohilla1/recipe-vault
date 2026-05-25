@@ -290,15 +290,7 @@ if page == "Meal Planner 🔒":
 
                             recipe_link = recipe_match.iloc[0]["Recipe Link"]
 
-                            linked_parts.append(
-                                f'''
-                                <a href="{recipe_link}"
-                                   target="_blank"
-                                   class="meal-link">
-                                   {part}
-                                </a>
-                                '''
-                            )
+                            linked_parts.append(f'<a href="{recipe_link}" target="_blank" class="meal-link">{part}</a>')
 
                         else:
                             linked_parts.append(part)
@@ -400,7 +392,7 @@ else:
     # =====================================================
 
     is_mobile = st.checkbox(
-    "📱 Mobile Layout",
+    "Mobile Layout",
     value=False)
 
     # =====================================================
