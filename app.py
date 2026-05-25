@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from streamlit_js_eval import streamlit_js_eval
 
 # =====================================================
 # PAGE CONFIG
@@ -17,43 +16,30 @@ st.set_page_config(
 # =====================================================
 
 with open("styles/style.css") as f:
-    st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+    st.markdown(
+        f"<style>{f.read()}</style>",
+        unsafe_allow_html=True
+    )
 
 # =====================================================
-# SCREEN SIZE
-# =====================================================
-
-screen_width = streamlit_js_eval(
-    js_expressions='window.innerWidth',
-    key='WIDTH',
-    want_output=True,
-)
-
-is_mobile = screen_width is not None and screen_width < 768
-
-# =====================================================
-# PIN
+# CONFIG
 # =====================================================
 
 PIN = st.secrets["planner_pin"]
-
-# =====================================================
-# LOAD SHEET
-# =====================================================
-
 sheet_id = st.secrets["sheet_id"]
 
-sheet_name = "Master"
+# =====================================================
+# LOAD MASTER SHEET
+# =====================================================
 
-csv_url = (
-    f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={sheet_name}"
+master_sheet = "Master"
+
+master_url = (
+    f"https://docs.google.com/spreadsheets/d/"
+    f"{sheet_id}/gviz/tq?tqx=out:csv&sheet={master_sheet}"
 )
 
-# =====================================================
-# READ DATA
-# =====================================================
-
-df = pd.read_csv(csv_url)
+df = pd.read_csv(master_url)
 
 df.columns = df.columns.str.strip()
 
@@ -127,7 +113,7 @@ all_tags = sorted(list(all_tags))
 # SIDEBAR
 # =====================================================
 
-st.sidebar.title("My Recipe Vault")
+st.sidebar.title("Kitchen")
 st.sidebar.caption("Luxury café style recipe library")
 
 page = st.sidebar.radio(
@@ -166,10 +152,6 @@ if selected_category != "All Recipes":
 if page == "Meal Planner 🔒":
 
     st.title("Weekly Meal Planner")
-
-    # =====================================================
-    # SESSION STATE
-    # =====================================================
 
     if "planner_unlocked" not in st.session_state:
         st.session_state.planner_unlocked = False
@@ -211,13 +193,14 @@ if page == "Meal Planner 🔒":
         st.stop()
 
     # =====================================================
-    # LOAD MEAL PLANNER SHEET
+    # LOAD PLANNER SHEET
     # =====================================================
 
     planner_sheet = "MealPlanner"
 
     planner_url = (
-        f"https://docs.google.com/spreadsheets/d/{sheet_id}/gviz/tq?tqx=out:csv&sheet={planner_sheet}"
+        f"https://docs.google.com/spreadsheets/d/"
+        f"{sheet_id}/gviz/tq?tqx=out:csv&sheet={planner_sheet}"
     )
 
     planner_df = pd.read_csv(planner_url)
@@ -248,7 +231,7 @@ if page == "Meal Planner 🔒":
     ]
 
     # =====================================================
-    # TWO COLUMN LAYOUT
+    # PLANNER DISPLAY
     # =====================================================
 
     for i in range(0, len(days), 2):
@@ -287,14 +270,19 @@ if page == "Meal Planner 🔒":
                         unsafe_allow_html=True
                     )
 
-                    meal_parts = [part.strip() for part in meal.split("+")]
+                    meal_parts = [
+                        part.strip()
+                        for part in meal.split("+")
+                    ]
 
                     linked_parts = []
 
                     for part in meal_parts:
 
                         recipe_match = df[
-                            df["Recipe Name"].str.strip().str.lower()
+                            df["Recipe Name"]
+                            .str.strip()
+                            .str.lower()
                             == part.lower()
                         ]
 
@@ -302,7 +290,15 @@ if page == "Meal Planner 🔒":
 
                             recipe_link = recipe_match.iloc[0]["Recipe Link"]
 
-                            linked_parts.append(f'<a href="{recipe_link}" target="_blank" class="meal-link">{part}</a>')
+                            linked_parts.append(
+                                f'''
+                                <a href="{recipe_link}"
+                                   target="_blank"
+                                   class="meal-link">
+                                   {part}
+                                </a>
+                                '''
+                            )
 
                         else:
                             linked_parts.append(part)
@@ -400,71 +396,107 @@ else:
     )
 
     # =====================================================
-    # TABLE HEADER
-    # =====================================================
+# MOBILE DETECTION
+# =====================================================
 
-    header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+st.markdown("""
+<style>
+@media (max-width: 768px) {
+    .desktop-table {
+        display: none;
+    }
+}
 
-    headers = [
-        "Recipe Name",
-        "Category",
-        "Protein",
-        "Carbs",
-        "Fats",
-        "Calories",
-        "Open"
-    ]
+@media (min-width: 769px) {
+    .mobile-cards {
+        display: none;
+    }
+}
+</style>
+""", unsafe_allow_html=True)
 
-    for col, title in zip(header_cols, headers):
-        col.markdown(f"<div class='table-header'>{title}</div>", unsafe_allow_html=True)
+# =====================================================
+# MOBILE CARDS
+# =====================================================
+
+for _, row in filtered_df.iterrows():
+
+    st.markdown(f"""<div class="mobile-recipe-card"><h3>{row['Recipe Name']}</h3><div class="mobile-category">{row['Category']}</div>
+                <div class="mobile-macros">Protein: {row['Protein']}g • Carbs: {row['Carbs']}g • Fats: {row['Fats']}g • {row['Calories']} kcal</div>
+                <a href="{row['Recipe Link']}" target="_blank">Open Recipe →</a></div>""",unsafe_allow_html=True)
+
+# =====================================================
+# DESKTOP TABLE
+# =====================================================
+
+st.markdown('<div class="desktop-table">', unsafe_allow_html=True)
+
+header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+
+headers = [
+    "Recipe Name",
+    "Category",
+    "Protein",
+    "Carbs",
+    "Fats",
+    "Calories",
+    "Open"
+]
+
+for col, title in zip(header_cols, headers):
+
+    col.markdown(
+        f"<div class='table-header'>{title}</div>",
+        unsafe_allow_html=True
+    )
+
+st.markdown("<hr>", unsafe_allow_html=True)
+
+for _, row in filtered_df.iterrows():
+
+    cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+
+    cols[0].markdown(
+        f"<div class='table-cell'>{row['Recipe Name']}</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[1].markdown(
+        f"<div class='table-cell'>{row['Category']}</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[2].markdown(
+        f"<div class='table-cell'>{row['Protein']}g</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[3].markdown(
+        f"<div class='table-cell'>{row['Carbs']}g</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[4].markdown(
+        f"<div class='table-cell'>{row['Fats']}g</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[5].markdown(
+        f"<div class='table-cell'>{row['Calories']}</div>",
+        unsafe_allow_html=True
+    )
+
+    cols[6].markdown(
+        f"""
+        <a href="{row['Recipe Link']}"
+           target="_blank"
+           class="open-link">
+           Open →
+        </a>
+        """,
+        unsafe_allow_html=True
+    )
 
     st.markdown("<hr>", unsafe_allow_html=True)
 
-    # =====================================================
-    # TABLE ROWS
-    # =====================================================
-
-    for _, row in filtered_df.iterrows():
-
-        cols = st.columns([3, 2, 1, 1, 1, 1, 1])
-
-        cols[0].markdown(
-            f"<div class='table-cell'>{row['Recipe Name']}</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[1].markdown(
-            f"<div class='table-cell'>{row['Category']}</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[2].markdown(
-            f"<div class='table-cell'>{row['Protein']}g</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[3].markdown(
-            f"<div class='table-cell'>{row['Carbs']}g</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[4].markdown(
-            f"<div class='table-cell'>{row['Fats']}g</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[5].markdown(
-            f"<div class='table-cell'>{row['Calories']}</div>",
-            unsafe_allow_html=True
-        )
-
-        cols[6].markdown(
-            f"""
-            <a href="{row['Recipe Link']}" target="_blank" class="open-link">
-                Open →
-            </a>
-            """,
-            unsafe_allow_html=True
-        )
-
-        st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
