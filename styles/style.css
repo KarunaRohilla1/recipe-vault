@@ -337,30 +337,3 @@ a:hover {
     text-transform: uppercase;
     color: #8B8176;
 }
-
-/* ================================================= */
-/* RESPONSIVE */
-/* ================================================= */
-
-@media (max-width: 768px) {
-
-    .desktop-table {
-        display: none;
-    }
-
-    div.block-container {
-        padding-left: 1rem !important;
-        padding-right: 1rem !important;
-    }
-
-    h1 {
-        font-size: 56px !important;
-    }
-}
-
-@media (min-width: 769px) {
-
-    .mobile-recipe-card {
-        display: none;
-    }
-}

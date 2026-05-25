@@ -396,107 +396,111 @@ else:
     )
 
     # =====================================================
-# MOBILE DETECTION
-# =====================================================
+    # RESPONSIVE CHECK
+    # =====================================================
 
-st.markdown("""
-<style>
-@media (max-width: 768px) {
-    .desktop-table {
-        display: none;
-    }
-}
+    is_mobile = st.checkbox(
+    "📱 Mobile Layout",
+    value=False)
 
-@media (min-width: 769px) {
-    .mobile-cards {
-        display: none;
-    }
-}
-</style>
-""", unsafe_allow_html=True)
+    # =====================================================
+    # MOBILE VIEW
+    # =====================================================
 
-# =====================================================
-# MOBILE CARDS
-# =====================================================
+    if is_mobile:
 
-for _, row in filtered_df.iterrows():
+        for _, row in filtered_df.iterrows():
 
-    st.markdown(f"""<div class="mobile-recipe-card"><h3>{row['Recipe Name']}</h3><div class="mobile-category">{row['Category']}</div>
-                <div class="mobile-macros">Protein: {row['Protein']}g • Carbs: {row['Carbs']}g • Fats: {row['Fats']}g • {row['Calories']} kcal</div>
-                <a href="{row['Recipe Link']}" target="_blank">Open Recipe →</a></div>""",unsafe_allow_html=True)
+            st.markdown(
+                f"""
+                <div class="mobile-recipe-card">
+                    <h3>{row['Recipe Name']}</h3>
+                    <div class="mobile-category">{row['Category']}</div>
+                    <div class="mobile-macros">
+                        Protein: {row['Protein']}g •
+                        Carbs: {row['Carbs']}g •
+                        Fats: {row['Fats']}g •
+                        {row['Calories']} kcal
+                    </div>
+                    <a href="{row['Recipe Link']}" target="_blank">Open Recipe →</a>
+                </div>""",
+                unsafe_allow_html=True
+            )
 
-# =====================================================
-# DESKTOP TABLE
-# =====================================================
+    else:   
 
-st.markdown('<div class="desktop-table">', unsafe_allow_html=True)
+    # =====================================================
+    # DESKTOP TABLE
+    # =====================================================
 
-header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+        st.markdown('<div class="desktop-table">', unsafe_allow_html=True)
 
-headers = [
-    "Recipe Name",
-    "Category",
-    "Protein",
-    "Carbs",
-    "Fats",
-    "Calories",
-    "Open"
-]
+        header_cols = st.columns([3, 2, 1, 1, 1, 1, 1])
 
-for col, title in zip(header_cols, headers):
+        headers = [
+                "Recipe Name",
+                "Category",
+                "Protein",
+                "Carbs",
+                "Fats",
+                "Calories",
+                "Open"
+            ]
 
-    col.markdown(
-        f"<div class='table-header'>{title}</div>",
-        unsafe_allow_html=True
-    )
+        for col, title in zip(header_cols, headers):
 
-st.markdown("<hr>", unsafe_allow_html=True)
+            col.markdown(
+                    f"<div class='table-header'>{title}</div>",
+                    unsafe_allow_html=True
+                )
 
-for _, row in filtered_df.iterrows():
+        st.markdown("<hr>", unsafe_allow_html=True)
 
-    cols = st.columns([3, 2, 1, 1, 1, 1, 1])
+        for _, row in filtered_df.iterrows():
 
-    cols[0].markdown(
-        f"<div class='table-cell'>{row['Recipe Name']}</div>",
-        unsafe_allow_html=True
-    )
+            cols = st.columns([3, 2, 1, 1, 1, 1, 1])
 
-    cols[1].markdown(
-        f"<div class='table-cell'>{row['Category']}</div>",
-        unsafe_allow_html=True
-    )
+            cols[0].markdown(
+                    f"<div class='table-cell'>{row['Recipe Name']}</div>",
+                    unsafe_allow_html=True
+                )
 
-    cols[2].markdown(
-        f"<div class='table-cell'>{row['Protein']}g</div>",
-        unsafe_allow_html=True
-    )
+            cols[1].markdown(
+                    f"<div class='table-cell'>{row['Category']}</div>",
+                    unsafe_allow_html=True
+                )
 
-    cols[3].markdown(
-        f"<div class='table-cell'>{row['Carbs']}g</div>",
-        unsafe_allow_html=True
-    )
+            cols[2].markdown(
+                    f"<div class='table-cell'>{row['Protein']}g</div>",
+                    unsafe_allow_html=True
+                )
 
-    cols[4].markdown(
-        f"<div class='table-cell'>{row['Fats']}g</div>",
-        unsafe_allow_html=True
-    )
+            cols[3].markdown(
+                    f"<div class='table-cell'>{row['Carbs']}g</div>",
+                    unsafe_allow_html=True
+                )
 
-    cols[5].markdown(
-        f"<div class='table-cell'>{row['Calories']}</div>",
-        unsafe_allow_html=True
-    )
+            cols[4].markdown(
+                    f"<div class='table-cell'>{row['Fats']}g</div>",
+                    unsafe_allow_html=True
+                )
 
-    cols[6].markdown(
-        f"""
-        <a href="{row['Recipe Link']}"
-           target="_blank"
-           class="open-link">
-           Open →
-        </a>
-        """,
-        unsafe_allow_html=True
-    )
+            cols[5].markdown(
+                    f"<div class='table-cell'>{row['Calories']}</div>",
+                    unsafe_allow_html=True
+                )
 
-    st.markdown("<hr>", unsafe_allow_html=True)
+            cols[6].markdown(
+                    f"""
+                    <a href="{row['Recipe Link']}"
+                    target="_blank"
+                    class="open-link">
+                    Open →
+                    </a>
+                    """,
+                    unsafe_allow_html=True
+                )
 
-st.markdown("</div>", unsafe_allow_html=True)
+            st.markdown("<hr>", unsafe_allow_html=True)
+
+        st.markdown("</div>", unsafe_allow_html=True)   
