@@ -1,3 +1,5 @@
 streamlit
 pandas
 streamlit-js-eval
+gspread
+google-auth
