@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from services.guest_planner import show_guest_planner
 
 # =====================================================
 # PAGE CONFIG
@@ -120,7 +121,8 @@ page = st.sidebar.radio(
     "",
     [
         "Recipes",
-        "Meal Planner 🔒"
+        "Meal Planner 🔒",
+        "Guest Planner 🔒"
     ]
 )
 
@@ -305,6 +307,11 @@ if page == "Meal Planner 🔒":
                         """,
                         unsafe_allow_html=True
                     )
+
+
+elif page == "Guest Planner 🔒":
+
+    show_guest_planner()
 
 # =====================================================
 # RECIPES PAGE
