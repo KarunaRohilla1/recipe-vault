@@ -1,4 +1,2 @@
 .streamlit/secrets.toml
 service_account.json
-services/__pycache__/guest_planner.cpython-314.pyc
-services/__pycache__/sheets.cpython-314.pyc
