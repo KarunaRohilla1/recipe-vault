@@ -1,4 +1,5 @@
 import streamlit as st
+from datetime import date
 
 from services.sheets import (
     load_master_recipes,
@@ -26,6 +27,11 @@ def show_guest_planner():
     if "pending_replace" not in st.session_state:
         st.session_state.pending_replace = None
 
+    if "guest_banner_dismissed_date" not in st.session_state:
+        st.session_state.guest_banner_dismissed_date = None
+
+    today = str(date.today())  
+
     # =====================================================
     # TITLE
     # =====================================================
@@ -51,6 +57,42 @@ def show_guest_planner():
             st.error("Wrong PIN")
 
         st.stop()
+
+    # =====================================================
+    # WELCOME BANNER
+    # =====================================================
+
+    if st.session_state.guest_banner_dismissed_date != today:
+
+        if "guest_banner_shown" not in st.session_state:
+            st.balloons()
+            st.session_state.guest_banner_shown = True
+
+        st.markdown("""<div style="background: #FFF8F2;
+                border: 1px solid #F0DCC8;
+                border-radius: 24px;
+                padding: 24px;
+                margin-bottom: 25px;">
+                <h3 style="
+                    margin-top:0;
+                    color:#2F2A24;">
+                    ❤️ A Quick Reminder
+                </h3>
+                <p style="font-size:22px;
+                    color:#4A433C;
+                    margin-bottom:0;">Hi! ✨ 
+                    Just a reminder: Your girlfriend loves you and is super proud of you. 
+                    Now go eat your protein. 😌</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+        hide_today = st.checkbox("Don't show again today",key="guest_banner_hide")
+
+        if hide_today:
+            st.session_state.guest_banner_dismissed_date = today
+            st.rerun()
 
     # =====================================================
     # LOAD DATA
@@ -190,6 +232,8 @@ def show_guest_planner():
                     pending["meal_type"],
                     pending["recipe"]
                 )
+
+                load_guest_planner.clear()
 
                 st.session_state.pending_replace = None
 
